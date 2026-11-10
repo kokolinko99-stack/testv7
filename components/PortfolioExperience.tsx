@@ -20,7 +20,9 @@ type Project = {
   description: string;
   className: string;
   thumbnail?: string;
-  kind: "drive" | "drive-folder" | "youtube";
+  aspectRatio?: string;
+  imageSrc?: string;
+  kind: "drive" | "drive-folder" | "youtube" | "image";
   driveId?: string;
   youtubeId?: string;
   folderId?: string;
@@ -163,6 +165,60 @@ const projects: Project[] = [
     driveId: "1YCNVWWysPmPGMTk1a08Fl0z9BIYDN_A7",
     externalUrl: "https://drive.google.com/file/d/1YCNVWWysPmPGMTk1a08Fl0z9BIYDN_A7/view",
   },
+  {
+    id: "08",
+    title: "PIECE 009 — CREATURE IN THE HALLWAY",
+    category: "SURREAL DIGITAL ART / 3D COMPOSITING",
+    role: "CONCEPT / COMPOSITING / VISUAL DEVELOPMENT",
+    tools: "DIGITAL ARTWORK",
+    format: "DIGITAL ARTWORK",
+    year: "2026",
+    projectType: "PERSONAL PROJECT",
+    sourceNote: "Original personal artwork.",
+    description:
+      "A surreal, cinematic composition placing an oversized creature inside a narrow, fluorescent-lit corridor. The reflective floor, cold blue-black treatment and spiral pendant create an uneasy, enclosed atmosphere.",
+    className: "project-artwork-009",
+    thumbnail: "/projects/piece-009.webp",
+    aspectRatio: "4 / 5",
+    kind: "image",
+    imageSrc: "/projects/piece-009.webp",
+  },
+  {
+    id: "09",
+    title: "PIECE 007 — SPIRAL CHARACTER",
+    category: "DIGITAL ILLUSTRATION / CHARACTER ART",
+    role: "CONCEPT / ILLUSTRATION / VISUAL DEVELOPMENT",
+    tools: "DIGITAL ARTWORK",
+    format: "CHARACTER ARTWORK",
+    year: "2026",
+    projectType: "PERSONAL PROJECT",
+    sourceNote: "Original personal artwork.",
+    description:
+      "A minimal black-and-white character drawing built from loose, expressive linework. Spiral eyes and a matching spiral in the open palm connect the image to the THRTYSIX visual language, while the stark black field keeps the character immediate.",
+    className: "project-artwork-007",
+    thumbnail: "/projects/piece-007.webp",
+    aspectRatio: "1 / 1",
+    kind: "image",
+    imageSrc: "/projects/piece-007.webp",
+  },
+  {
+    id: "10",
+    title: "UNTITLED — CHARACTER ARTWORK",
+    category: "CHARACTER ART / DIGITAL COMPOSITION",
+    role: "CHARACTER DESIGN / VISUAL COMPOSITION",
+    tools: "DIGITAL ARTWORK",
+    format: "CHARACTER ARTWORK",
+    year: "2026",
+    projectType: "PERSONAL PROJECT",
+    sourceNote: "Original personal artwork.",
+    description:
+      "A vivid character composition featuring an exaggerated pink creature, sculptural top hat, green spiral eyes and a repeating yellow spiral backdrop. Textured surfaces, sticker-like outlines and contrasting colors give the piece a playful but unsettling tone.",
+    className: "project-artwork-new",
+    thumbnail: "/projects/untitled-character-artwork.webp",
+    aspectRatio: "1 / 1",
+    kind: "image",
+    imageSrc: "/projects/untitled-character-artwork.webp",
+  },
 ];
 
 const services = ["VIDEO EDITING", "GRAPHIC DESIGN", "MOTION GRAPHICS", "BRANDING", "3D VISUALS"] as const;
@@ -247,12 +303,13 @@ function TiltProject({ project, onOpen }: { project: Project; onOpen: (project: 
         }
       }}
     >
-      <div className={`project-stage ${project.className}`}>
+      <div className={`project-stage ${project.className}`} style={project.aspectRatio ? { aspectRatio: project.aspectRatio } : undefined}>
         {thumbnail && !imageFailed ? (
           <img
             src={thumbnail}
             alt=""
             className="project-video-thumb"
+            style={project.kind === "image" ? { filter: "none", transform: "none", objectFit: "contain", background: "#000" } : undefined}
             loading={project.id === "01" || project.id === "02" ? "eager" : "lazy"}
             draggable={false}
             onError={() => setImageFailed(true)}
@@ -579,6 +636,26 @@ export default function PortfolioExperience() {
 
   return (
     <div className={`site-shell ${siteEntered ? "is-entered" : "is-preparing"}`}>
+      <style>{`
+        /* Artwork cards keep their own aspect ratios after being repositioned. */
+        .work .project-list .project-card.project-card-08 .project-stage {
+          aspect-ratio: 4 / 5 !important;
+        }
+
+        .work .project-list .project-card.project-card-09 .project-stage,
+        .work .project-list .project-card.project-card-10 .project-stage {
+          aspect-ratio: 1 / 1 !important;
+        }
+
+        .work .project-list .project-card.project-card-08 .project-stage .project-video-thumb,
+        .work .project-list .project-card.project-card-09 .project-stage .project-video-thumb,
+        .work .project-list .project-card.project-card-10 .project-stage .project-video-thumb {
+          object-fit: contain !important;
+          object-position: center !important;
+          transform: none !important;
+          filter: none !important;
+        }
+      `}</style>
       <Analytics />
       {loaderVisible && (
         <div className={`site-loader ${loaderLeaving ? "is-leaving" : ""}`} aria-label="Loading website" role="status">
@@ -628,12 +705,16 @@ export default function PortfolioExperience() {
               ))}
             </div>
 
-            <div className="project-layout-feature">
+            <div className="project-layout-row project-layout-row-top">
+              <TiltProject project={projects[7]} onOpen={openProject} />
               <TiltProject project={projects[2]} onOpen={openProject} />
             </div>
 
             <div className="project-layout-row project-layout-row-mixed">
-              <TiltProject project={projects[3]} onOpen={openProject} />
+              <div className="project-layout-stack">
+                <TiltProject project={projects[3]} onOpen={openProject} />
+                <TiltProject project={projects[8]} onOpen={openProject} />
+              </div>
               <div className="project-layout-stack">
                 {projects.slice(4, 6).map((project) => (
                   <TiltProject key={project.id} project={project} onOpen={openProject} />
@@ -641,8 +722,12 @@ export default function PortfolioExperience() {
               </div>
             </div>
 
-            <div className="project-layout-closing">
+            <div
+              className="project-layout-row project-layout-row-mixed"
+              style={{ gridTemplateColumns: "minmax(0, 4fr) minmax(0, 3fr)" }}
+            >
               <TiltProject project={projects[6]} onOpen={openProject} />
+              <TiltProject project={projects[9]} onOpen={openProject} />
             </div>
           </div>
         </section>
@@ -726,7 +811,22 @@ export default function PortfolioExperience() {
         <div className="project-modal case-study-modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title" onMouseDown={(event) => { if (event.target === event.currentTarget) closeProject(); }}>
           <button ref={modalCloseRef} className="modal-close" onClick={closeProject} aria-label="Close project">×</button>
           <div className="case-study-media">
-            {activeProject.kind === "youtube" && activeProject.youtubeId ? (
+            {activeProject.kind === "image" && activeProject.imageSrc ? (
+              <img
+                src={activeProject.imageSrc}
+                alt={activeProject.title}
+                draggable={false}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  display: "block",
+                  objectFit: "contain",
+                  padding: "clamp(14px, 3vw, 48px)",
+                }}
+              />
+            ) : activeProject.kind === "youtube" && activeProject.youtubeId ? (
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/${activeProject.youtubeId}?rel=0&modestbranding=1&playsinline=1`}
                 title={activeProject.title}
