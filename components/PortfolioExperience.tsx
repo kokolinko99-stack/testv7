@@ -655,6 +655,31 @@ export default function PortfolioExperience() {
           transform: none !important;
           filter: none !important;
         }
+
+        /* A little controlled irregularity keeps the project wall from feeling like a rigid grid. */
+        .work .project-list .project-card-01 { translate: -9px 7px; rotate: -0.55deg; }
+        .work .project-list .project-card-02 { translate: 9px -6px; rotate: 0.5deg; }
+        .work .project-list .project-card-08 { translate: 10px 14px; rotate: -0.9deg; }
+        .work .project-list .project-card-03 { translate: -12px -9px; rotate: 0.7deg; }
+        .work .project-list .project-card-04 { translate: -8px -7px; rotate: 0.55deg; }
+        .work .project-list .project-card-09 { translate: -12px 12px; rotate: -1.05deg; }
+        .work .project-list .project-card-05 { translate: 10px -10px; rotate: 0.7deg; }
+        .work .project-list .project-card-06 { translate: 12px 9px; rotate: -0.7deg; }
+        .work .project-list .project-card-07 { translate: -10px 10px; rotate: -0.6deg; }
+        .work .project-list .project-card-10 { translate: 12px -8px; rotate: 0.85deg; }
+
+        @media (max-width: 760px) {
+          .work .project-list .project-card-01 { translate: -4px 4px; rotate: -0.25deg; }
+          .work .project-list .project-card-02 { translate: 4px -3px; rotate: 0.25deg; }
+          .work .project-list .project-card-08 { translate: 4px 7px; rotate: -0.4deg; }
+          .work .project-list .project-card-03 { translate: -4px -4px; rotate: 0.3deg; }
+          .work .project-list .project-card-04 { translate: -3px -3px; rotate: 0.25deg; }
+          .work .project-list .project-card-09 { translate: -4px 6px; rotate: -0.45deg; }
+          .work .project-list .project-card-05 { translate: 4px -5px; rotate: 0.3deg; }
+          .work .project-list .project-card-06 { translate: 4px 4px; rotate: -0.3deg; }
+          .work .project-list .project-card-07 { translate: -4px 5px; rotate: -0.25deg; }
+          .work .project-list .project-card-10 { translate: 4px -4px; rotate: 0.35deg; }
+        }
       `}</style>
       <Analytics />
       {loaderVisible && (
