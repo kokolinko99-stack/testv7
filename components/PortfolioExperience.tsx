@@ -167,7 +167,7 @@ const projects: Project[] = [
   },
   {
     id: "08",
-    title: "PIECE 009 — CREATURE IN THE HALLWAY",
+    title: "SURREAL ART",
     category: "SURREAL DIGITAL ART / 3D COMPOSITING",
     role: "CONCEPT / COMPOSITING / VISUAL DEVELOPMENT",
     tools: "DIGITAL ARTWORK",
@@ -185,7 +185,7 @@ const projects: Project[] = [
   },
   {
     id: "09",
-    title: "PIECE 007 — SPIRAL CHARACTER",
+    title: "LINEWORK",
     category: "DIGITAL ILLUSTRATION / CHARACTER ART",
     role: "CONCEPT / ILLUSTRATION / VISUAL DEVELOPMENT",
     tools: "DIGITAL ARTWORK",
@@ -203,7 +203,7 @@ const projects: Project[] = [
   },
   {
     id: "10",
-    title: "UNTITLED — CHARACTER ARTWORK",
+    title: "EXPERIMENT ARTWORK",
     category: "CHARACTER ART / DIGITAL COMPOSITION",
     role: "CHARACTER DESIGN / VISUAL COMPOSITION",
     tools: "DIGITAL ARTWORK",
