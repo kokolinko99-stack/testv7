@@ -800,11 +800,9 @@ export default function PortfolioExperience() {
         <section className="contact" id="contact">
           <a
             className="contact-dm-button contact-heading-button"
-            href="https://x.com/messages/compose"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Let&apos;s work together — send me a direct message on X"
-            onClick={() => trackEvent("contact_dm_click", { platform: "X" })}
+            href="mailto:info@bythrtysix.com"
+            aria-label="Let&apos;s work together — send an email to info@bythrtysix.com"
+            onClick={() => trackEvent("contact_email_click", { platform: "Email" })}
           >
             <span>LET&apos;S WORK<br />TOGETHER</span>
             <strong aria-hidden="true">↗</strong>
