@@ -656,18 +656,21 @@ export default function PortfolioExperience() {
           filter: none !important;
         }
 
-        /* Adjust the visual hierarchy without changing the artwork positions. */
-        .work .project-list .project-layout-stack > .project-card.project-card-09 {
-          width: 82% !important;
-          max-width: 82%;
-          align-self: flex-start;
-          justify-self: start;
+        /*
+          Keep Parallel as the larger feature card in the final row.
+          The shared layout module marks its mixed-row sizing as !important,
+          so this more specific rule must also be !important.
+        */
+        .work .project-list .project-layout-row-parallel {
+          grid-template-columns: minmax(0, 7fr) minmax(0, 3fr) !important;
+          align-items: start !important;
         }
 
-        /* Give Parallel more room than the adjacent character artwork. */
-        .work .project-list .project-layout-row-mixed:last-child > .project-card.project-card-07 {
-          width: 100%;
-          min-width: 0;
+        .work .project-list .project-layout-row-parallel > .project-card.project-card-07,
+        .work .project-list .project-layout-row-parallel > .project-card.project-card-10 {
+          width: 100% !important;
+          max-width: none !important;
+          min-width: 0 !important;
         }
 
         /* A little controlled irregularity keeps the project wall from feeling like a rigid grid. */
@@ -682,11 +685,13 @@ export default function PortfolioExperience() {
         .work .project-list .project-card-07 { translate: -10px 10px; rotate: -0.6deg; }
         .work .project-list .project-card-10 { translate: 12px -8px; rotate: 0.85deg; }
 
-        @media (max-width: 760px) {
-          .work .project-list .project-layout-stack > .project-card.project-card-09 {
-            width: 100% !important;
-            max-width: 100%;
+        @media (max-width: 900px) {
+          .work .project-list .project-layout-row-parallel {
+            grid-template-columns: minmax(0, 1fr) !important;
           }
+        }
+
+        @media (max-width: 760px) {
           .work .project-list .project-card-01 { translate: -4px 4px; rotate: -0.25deg; }
           .work .project-list .project-card-02 { translate: 4px -3px; rotate: 0.25deg; }
           .work .project-list .project-card-08 { translate: 4px 7px; rotate: -0.4deg; }
@@ -766,7 +771,7 @@ export default function PortfolioExperience() {
             </div>
 
             <div
-              className="project-layout-row project-layout-row-mixed"
+              className="project-layout-row project-layout-row-mixed project-layout-row-parallel"
               style={{ gridTemplateColumns: "minmax(0, 7fr) minmax(0, 3fr)" }}
             >
               <TiltProject project={projects[6]} onOpen={openProject} />
@@ -795,9 +800,11 @@ export default function PortfolioExperience() {
         <section className="contact" id="contact">
           <a
             className="contact-dm-button contact-heading-button"
-            href="mailto:info@bythrtysix.com"
-            aria-label="Let&apos;s work together — send an email to info@bythrtysix.com"
-            onClick={() => trackEvent("contact_email_click", { platform: "Email" })}
+            href="https://x.com/messages/compose"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Let&apos;s work together — send me a direct message on X"
+            onClick={() => trackEvent("contact_dm_click", { platform: "X" })}
           >
             <span>LET&apos;S WORK<br />TOGETHER</span>
             <strong aria-hidden="true">↗</strong>
