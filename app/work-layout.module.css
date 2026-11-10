@@ -1,0 +1,911 @@
+.workPatch {
+  min-width: 0;
+  overflow-x: clip;
+}
+
+/*
+  Stable project layout.
+  The previous desktop patch flattened the editorial wrappers and combined
+  that with JS-measured grid rows. This version keeps the original wrapper
+  structure and disables the measured masonry rows, so cards cannot overlap.
+*/
+.workPatch :global(.work-scroll-reveal),
+.workPatch :global(.work),
+.workPatch :global(.project-list),
+.workPatch :global(.project-layout-row),
+.workPatch :global(.project-layout-feature),
+.workPatch :global(.project-layout-stack),
+.workPatch :global(.project-layout-closing),
+.workPatch :global(.project-card) {
+  overflow: visible !important;
+}
+
+.workPatch :global(.work .section-intro),
+.workPatch :global(.work .project-list) {
+  width: min(calc(100% - 48px), 1360px);
+  margin-inline: auto;
+}
+
+.workPatch :global(.work .section-intro) {
+  margin-bottom: clamp(52px, 5vw, 78px) !important;
+}
+
+/* Cancel the JS masonry grid while keeping its class harmless. */
+.workPatch :global(.project-list.project-masonry-active) {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: clamp(84px, 7vw, 118px) !important;
+  grid-template-columns: none !important;
+  grid-auto-flow: initial !important;
+  grid-auto-rows: auto !important;
+  padding: 0 0 clamp(72px, 7vw, 110px) !important;
+}
+
+.workPatch :global(.project-list.project-masonry-active .project-card) {
+  grid-column: auto !important;
+  grid-row: auto !important;
+  grid-row-end: auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  align-self: start !important;
+  contain: none !important;
+  transform-style: preserve-3d;
+}
+
+/* Restore and rebalance the original editorial wrappers. */
+.workPatch :global(.project-layout-row),
+.workPatch :global(.project-layout-feature),
+.workPatch :global(.project-layout-stack),
+.workPatch :global(.project-layout-closing) {
+  display: grid !important;
+  position: relative;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+
+.workPatch :global(.project-layout-row-top) {
+  grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr) !important;
+  gap: clamp(42px, 4vw, 72px) !important;
+  align-items: end !important;
+}
+
+.workPatch :global(.project-layout-feature) {
+  display: block !important;
+  width: min(78%, 1040px) !important;
+  margin-left: auto !important;
+  margin-right: clamp(0px, 3vw, 42px) !important;
+}
+
+.workPatch :global(.project-layout-row-mixed) {
+  grid-template-columns: minmax(260px, 0.68fr) minmax(0, 1.32fr) !important;
+  gap: clamp(48px, 4.5vw, 82px) !important;
+  align-items: start !important;
+}
+
+.workPatch :global(.project-layout-stack) {
+  grid-template-columns: 1fr !important;
+  gap: clamp(72px, 6vw, 104px) !important;
+  align-content: start !important;
+}
+
+.workPatch :global(.project-layout-closing) {
+  display: block !important;
+  width: min(70%, 900px) !important;
+  margin-inline: auto !important;
+}
+
+/* Controlled desktop sizes. */
+.workPatch :global(.project-card-01) {
+  width: min(100%, 370px) !important;
+  justify-self: start !important;
+}
+
+.workPatch :global(.project-card-02) {
+  width: min(100%, 760px) !important;
+  justify-self: end !important;
+}
+
+.workPatch :global(.project-card-03) {
+  width: 100% !important;
+}
+
+.workPatch :global(.project-card-04) {
+  width: min(100%, 410px) !important;
+  justify-self: start !important;
+}
+
+.workPatch :global(.project-card-05),
+.workPatch :global(.project-card-06) {
+  width: 100% !important;
+}
+
+.workPatch :global(.project-card-07) {
+  width: 100% !important;
+}
+
+/* Match the cards to their real media shapes. */
+.workPatch :global(.project-card-01 .project-stage) {
+  aspect-ratio: 1 / 1 !important;
+}
+
+.workPatch :global(.project-card-02 .project-stage),
+.workPatch :global(.project-card-03 .project-stage),
+.workPatch :global(.project-card-05 .project-stage) {
+  aspect-ratio: 16 / 9 !important;
+}
+
+.workPatch :global(.project-card-04 .project-stage) {
+  aspect-ratio: 9 / 16 !important;
+}
+
+.workPatch :global(.project-card-06 .project-stage) {
+  aspect-ratio: 8 / 5 !important;
+}
+
+.workPatch :global(.project-card-07 .project-stage) {
+  aspect-ratio: 4 / 3 !important;
+}
+
+/* Keep the complete card visible when it tilts, without enlarging the image. */
+.workPatch :global(.project-stage) {
+  overflow: visible !important;
+  border: 0 !important;
+  isolation: auto !important;
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+}
+
+.workPatch :global(.project-video-thumb) {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transform: translateZ(28px) scale(1) !important;
+  backface-visibility: hidden;
+  transition:
+    filter 0.28s ease,
+    transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+.workPatch :global(.project-card:hover .project-video-thumb),
+.workPatch :global(.project-card:focus-visible .project-video-thumb) {
+  transform: translateZ(42px) scale(1) !important;
+}
+
+.workPatch :global(.project-copy) {
+  padding-top: clamp(12px, 1.1vw, 18px) !important;
+  gap: 12px !important;
+}
+
+.workPatch :global(.project-copy h3),
+.workPatch :global(.project-card:nth-child(1) .project-copy h3),
+.workPatch :global(.project-card:nth-child(4) .project-copy h3),
+.workPatch :global(.project-card:nth-child(7) .project-copy h3) {
+  max-width: 20ch !important;
+  font-size: clamp(25px, 5.2cqi, 54px) !important;
+  line-height: 0.92 !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+/* Laptop widths. */
+@media (max-width: 1199px) and (min-width: 901px) {
+  .workPatch :global(.work .section-intro),
+  .workPatch :global(.work .project-list) {
+    width: min(calc(100% - 36px), 1040px);
+  }
+
+  .workPatch :global(.project-list.project-masonry-active) {
+    gap: 82px !important;
+  }
+
+  .workPatch :global(.project-layout-row-top) {
+    grid-template-columns: minmax(240px, 0.82fr) minmax(0, 1.18fr) !important;
+    gap: 34px !important;
+  }
+
+  .workPatch :global(.project-layout-feature) {
+    width: 84% !important;
+    margin-right: 0 !important;
+  }
+
+  .workPatch :global(.project-layout-row-mixed) {
+    grid-template-columns: minmax(230px, 0.72fr) minmax(0, 1.28fr) !important;
+    gap: 38px !important;
+  }
+
+  .workPatch :global(.project-layout-stack) {
+    gap: 70px !important;
+  }
+
+  .workPatch :global(.project-layout-closing) {
+    width: 78% !important;
+  }
+
+  .workPatch :global(.project-card-01) {
+    width: min(100%, 320px) !important;
+  }
+
+  .workPatch :global(.project-card-04) {
+    width: min(100%, 340px) !important;
+  }
+}
+
+/* Mobile and portrait tablet: simple single column, no measured rows. */
+@media (max-width: 900px) {
+  .workPatch {
+    overflow-x: hidden;
+  }
+
+  .workPatch :global(.work .section-intro),
+  .workPatch :global(.work .project-list) {
+    width: min(calc(100% - 28px), 720px);
+  }
+
+  .workPatch :global(.project-list.project-masonry-active) {
+    display: flex !important;
+    gap: 68px !important;
+    padding-bottom: 74px !important;
+  }
+
+  .workPatch :global(.project-layout-row),
+  .workPatch :global(.project-layout-feature),
+  .workPatch :global(.project-layout-stack),
+  .workPatch :global(.project-layout-closing) {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    margin: 0 !important;
+    gap: 68px !important;
+  }
+
+  .workPatch :global(.project-list.project-masonry-active .project-card),
+  .workPatch :global(.project-card-01),
+  .workPatch :global(.project-card-02),
+  .workPatch :global(.project-card-03),
+  .workPatch :global(.project-card-04),
+  .workPatch :global(.project-card-05),
+  .workPatch :global(.project-card-06),
+  .workPatch :global(.project-card-07) {
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-self: stretch !important;
+    grid-row: auto !important;
+    grid-row-end: auto !important;
+  }
+
+  .workPatch :global(.project-card-01) {
+    width: min(86%, 410px) !important;
+    justify-self: center !important;
+  }
+
+  .workPatch :global(.project-card-04) {
+    width: min(88%, 480px) !important;
+    justify-self: center !important;
+  }
+
+  .workPatch :global(.project-copy h3),
+  .workPatch :global(.project-card:nth-child(1) .project-copy h3),
+  .workPatch :global(.project-card:nth-child(4) .project-copy h3),
+  .workPatch :global(.project-card:nth-child(7) .project-copy h3) {
+    font-size: clamp(30px, 8.8vw, 54px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workPatch :global(.project-stage),
+  .workPatch :global(.project-video-thumb) {
+    transform: none !important;
+  }
+}
+
+/* =========================================================
+   THRTYSIX PROJECT CARD VISUAL SYSTEM
+   Decorative only: keeps the stable non-overlapping layout and native ratios. No project numbering or animated metadata rail.
+   ========================================================= */
+
+.workPatch :global(.project-card) {
+  --project-accent: #14A234;
+  position: relative !important;
+  isolation: isolate;
+  container-type: inline-size;
+  --view-center-y: 28.125cqi;
+  padding-top: 0 !important;
+  cursor: pointer;
+}
+
+
+
+
+/* Position the centered VIEW badge at the middle of each real media ratio. */
+.workPatch :global(.project-card-01) {
+  --view-center-y: 50cqi;
+}
+
+.workPatch :global(.project-card-04) {
+  --view-center-y: 88.889cqi;
+}
+
+.workPatch :global(.project-card-06) {
+  --view-center-y: 31.25cqi;
+}
+
+.workPatch :global(.project-card-07) {
+  --view-center-y: 37.5cqi;
+}
+
+/* Floating interaction badge. */
+.workPatch :global(.project-card::after) {
+  content: "VIEW ↗";
+  position: absolute;
+  top: var(--view-center-y);
+  left: 50%;
+  right: auto;
+  z-index: 12;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 9px 13px 8px;
+  border: 1px solid rgba(241, 240, 233, 0.24);
+  background: rgba(5, 5, 5, 0.84);
+  color: rgba(241, 240, 233, 0.86);
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.13em;
+  white-space: nowrap;
+  opacity: 0.82;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 70px);
+  transition:
+    color 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease,
+    opacity 220ms ease,
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.workPatch :global(.project-stage) {
+  position: relative !important;
+  background: #050505 !important;
+  border: 1px solid rgba(241, 240, 233, 0.14) !important;
+  box-shadow:
+    14px 14px 0 rgba(20, 162, 52, 0.055),
+    0 26px 64px rgba(0, 0, 0, 0.38),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.025) !important;
+  transition:
+    transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 280ms ease,
+    border-color 220ms ease,
+    box-shadow 280ms ease !important;
+}
+
+/* Four green corner marks that remain outside the image without clipping it. */
+.workPatch :global(.project-stage::before) {
+  content: "" !important;
+  position: absolute !important;
+  inset: -7px !important;
+  z-index: 8 !important;
+  display: block !important;
+  background:
+    linear-gradient(var(--project-accent), var(--project-accent)) left top / 42px 2px no-repeat,
+    linear-gradient(var(--project-accent), var(--project-accent)) left top / 2px 42px no-repeat,
+    linear-gradient(var(--project-accent), var(--project-accent)) right bottom / 42px 2px no-repeat,
+    linear-gradient(var(--project-accent), var(--project-accent)) right bottom / 2px 42px no-repeat !important;
+  opacity: 0.56 !important;
+  filter: none !important;
+  pointer-events: none;
+  transform: translateZ(58px);
+  transition: opacity 220ms ease, inset 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Light follows the cursor where --mx / --my are provided by the card tilt code. */
+.workPatch :global(.project-stage::after) {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 6 !important;
+  display: block !important;
+  background:
+    radial-gradient(
+      circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.17),
+      rgba(20, 162, 52, 0.07) 20%,
+      transparent 48%
+    ) !important;
+  mix-blend-mode: screen;
+  opacity: 0 !important;
+  filter: none !important;
+  pointer-events: none;
+  transform: translateZ(48px);
+  transition: opacity 240ms ease !important;
+}
+
+.workPatch :global(.project-video-thumb) {
+  filter: grayscale(1) saturate(0) contrast(1.08) brightness(0.82);
+  transition:
+    filter 340ms ease,
+    transform 250ms cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+.workPatch :global(.project-copy) {
+  position: relative;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  border-top: 1px solid rgba(241, 240, 233, 0.16);
+  margin-top: 17px;
+  padding-top: 15px !important;
+}
+
+
+.workPatch :global(.project-copy h3) {
+  margin-top: 5px !important;
+  color: #f1f0e9 !important;
+  text-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+  transition: color 220ms ease, transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.workPatch :global(.project-copy p),
+.workPatch :global(.project-category),
+.workPatch :global(.project-card-meta) {
+  color: rgba(241, 240, 233, 0.56) !important;
+  letter-spacing: 0.11em !important;
+  transition: color 220ms ease;
+}
+
+
+.workPatch :global(.project-card:hover::after),
+.workPatch :global(.project-card:focus-visible::after),
+.workPatch :global(.project-card:focus-within::after),
+.workPatch :global(.project-card:active::after) {
+  border-color: #14A234;
+  background: #14A234;
+  color: #050505;
+  box-shadow:
+    0 0 0 1px rgba(20, 162, 52, 0.24),
+    0 0 22px rgba(20, 162, 52, 0.58),
+    0 8px 28px rgba(0, 0, 0, 0.42);
+  opacity: 1;
+  transform: translate3d(-50%, calc(-50% - 4px), 76px);
+}
+
+.workPatch :global(.project-card:hover .project-stage),
+.workPatch :global(.project-card:focus-visible .project-stage) {
+  border-color: rgba(20, 162, 52, 0.72) !important;
+  box-shadow:
+    20px 20px 0 rgba(20, 162, 52, 0.095),
+    0 34px 84px rgba(0, 0, 0, 0.5),
+    0 0 42px rgba(20, 162, 52, 0.075),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04) !important;
+}
+
+.workPatch :global(.project-card:hover .project-stage::before),
+.workPatch :global(.project-card:focus-visible .project-stage::before) {
+  inset: -11px !important;
+  opacity: 0.96 !important;
+}
+
+.workPatch :global(.project-card:hover .project-stage::after),
+.workPatch :global(.project-card:focus-visible .project-stage::after) {
+  opacity: 1 !important;
+}
+
+.workPatch :global(.project-card:hover .project-video-thumb),
+.workPatch :global(.project-card:focus-visible .project-video-thumb),
+.workPatch :global(.project-card:active .project-video-thumb) {
+  filter: grayscale(0) saturate(1.04) contrast(1.02) brightness(1.01);
+}
+
+
+
+.workPatch :global(.project-card:hover .project-copy h3),
+.workPatch :global(.project-card:focus-visible .project-copy h3) {
+  color: var(--project-accent) !important;
+  transform: translate3d(5px, 0, 0);
+}
+
+.workPatch :global(.project-card:hover .project-copy p),
+.workPatch :global(.project-card:hover .project-category),
+.workPatch :global(.project-card:hover .project-card-meta),
+.workPatch :global(.project-card:focus-visible .project-copy p),
+.workPatch :global(.project-card:focus-visible .project-category),
+.workPatch :global(.project-card:focus-visible .project-card-meta) {
+  color: rgba(241, 240, 233, 0.8) !important;
+}
+
+@media (max-width: 900px) {
+  .workPatch :global(.project-card::after) {
+    left: 50%;
+    right: auto;
+    min-height: 30px;
+    padding: 8px 10px 7px;
+    font-size: 8px;
+    opacity: 0.9;
+  }
+
+  .workPatch :global(.project-stage) {
+    box-shadow:
+      9px 9px 0 rgba(20, 162, 52, 0.055),
+      0 20px 48px rgba(0, 0, 0, 0.34) !important;
+  }
+
+  .workPatch :global(.project-stage::before) {
+    inset: -5px !important;
+    background:
+      linear-gradient(var(--project-accent), var(--project-accent)) left top / 28px 2px no-repeat,
+      linear-gradient(var(--project-accent), var(--project-accent)) left top / 2px 28px no-repeat,
+      linear-gradient(var(--project-accent), var(--project-accent)) right bottom / 28px 2px no-repeat,
+      linear-gradient(var(--project-accent), var(--project-accent)) right bottom / 2px 28px no-repeat !important;
+  }
+
+  .workPatch :global(.project-copy) {
+    grid-template-columns: 1fr;
+    margin-top: 13px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .workPatch :global(.project-card::after) {
+    opacity: 0.82;
+  }
+
+  .workPatch :global(.project-video-thumb) {
+    filter: grayscale(1) saturate(0) contrast(1.08) brightness(0.84);
+  }
+
+  .workPatch :global(.project-card:active .project-video-thumb) {
+    filter: grayscale(0) saturate(1.04) contrast(1.02) brightness(1.01);
+  }
+
+  .workPatch :global(.project-stage::after) {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workPatch :global(.project-card::after),
+  .workPatch :global(.project-stage),
+  .workPatch :global(.project-stage::before),
+  .workPatch :global(.project-stage::after),
+  .workPatch :global(.project-video-thumb),
+  .workPatch :global(.project-copy),
+  .workPatch :global(.project-copy h3),
+  .workPatch :global(.project-copy p),
+  .workPatch :global(.project-category),
+  .workPatch :global(.project-card-meta) {
+    transition: none !important;
+  }
+}
+
+
+/* =========================================================
+   PROOF NUTRITION GIVEAWAY COLLAGE FIX
+   Keeps all three deliverables inside the first card instead of letting the
+   generated items stack vertically and expand the Work section.
+   ========================================================= */
+
+.workPatch :global(.project-card-01 .project-stage[data-giveaway-versions="true"]) {
+  position: relative !important;
+  /* Keep the outer corner markers visible. The collage itself clips its media. */
+  overflow: visible !important;
+  background: #070707 !important;
+}
+
+/* Reinforce the same green corner treatment used by every other project card. */
+.workPatch :global(.project-card-01 .project-stage[data-giveaway-versions="true"]::before) {
+  z-index: 40 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.62 !important;
+}
+
+.workPatch :global(.project-card-01:hover .project-stage[data-giveaway-versions="true"]::before),
+.workPatch :global(.project-card-01:focus-visible .project-stage[data-giveaway-versions="true"]::before),
+.workPatch :global(.project-card-01.is-view-hovered .project-stage[data-giveaway-versions="true"]::before) {
+  opacity: 1 !important;
+}
+
+.workPatch :global(.giveaway-version-mosaic) {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.28fr) minmax(0, 1fr) !important;
+  grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+  gap: clamp(4px, 0.5vw, 7px) !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: clamp(4px, 0.5vw, 7px) !important;
+  overflow: hidden !important;
+  background: #070707;
+  pointer-events: none;
+  transform: translateZ(28px);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.workPatch :global(.giveaway-version-item) {
+  position: relative !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(241, 240, 233, 0.13);
+  background: #0a0a0a;
+}
+
+.workPatch :global(.giveaway-version-item.is-giveaway) {
+  grid-column: 1 !important;
+  grid-row: 1 / span 2 !important;
+}
+
+.workPatch :global(.giveaway-version-item.is-winners) {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+}
+
+.workPatch :global(.giveaway-version-item.is-animated) {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+}
+
+.workPatch :global(.giveaway-version-image) {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  background: #080808;
+  filter: grayscale(1) saturate(0) contrast(1.08) brightness(0.82);
+  transform: scale(1.001);
+  transition:
+    filter 340ms ease,
+    transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+.workPatch :global(.project-card-01:hover .giveaway-version-image),
+.workPatch :global(.project-card-01:focus-visible .giveaway-version-image),
+.workPatch :global(.project-card-01:active .giveaway-version-image) {
+  filter: grayscale(0) saturate(1.04) contrast(1.02) brightness(1.01);
+  transform: scale(1.025);
+}
+
+.workPatch :global(.giveaway-version-label) {
+  position: absolute !important;
+  left: clamp(5px, 0.55vw, 9px) !important;
+  bottom: clamp(5px, 0.55vw, 9px) !important;
+  z-index: 3;
+  max-width: calc(100% - 10px);
+  padding: 4px 6px 3px;
+  overflow: hidden;
+  border: 1px solid rgba(241, 240, 233, 0.3);
+  background: rgba(5, 5, 5, 0.84);
+  color: #f1f0e9;
+  font-size: clamp(7px, 0.62vw, 10px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.045em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workPatch :global(.giveaway-version-play) {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  z-index: 3;
+  display: grid !important;
+  width: clamp(22px, 2.2vw, 34px);
+  height: clamp(22px, 2.2vw, 34px);
+  place-items: center;
+  border: 1px solid rgba(241, 240, 233, 0.5);
+  border-radius: 50%;
+  background: rgba(5, 5, 5, 0.7);
+  color: #f1f0e9;
+  font-size: clamp(8px, 0.72vw, 11px);
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 900px) {
+  .workPatch :global(.giveaway-version-mosaic) {
+    gap: 5px !important;
+    padding: 5px !important;
+  }
+
+  .workPatch :global(.giveaway-version-label) {
+    font-size: clamp(7px, 2vw, 10px);
+  }
+}
+
+/* =========================================================
+   VIEW BADGE — GUARANTEED GREEN CARD-HOVER STATE
+   Placed last so older/global project-card rules cannot override it.
+   ========================================================= */
+.workPatch :global(.project-card:hover::after),
+.workPatch :global(.project-card:focus-visible::after),
+.workPatch :global(.project-card:focus-within::after),
+.workPatch :global(.project-card:active::after) {
+  background: #14A234 !important;
+  background-color: #14A234 !important;
+  border-color: #14A234 !important;
+  color: #050505 !important;
+  opacity: 1 !important;
+  box-shadow:
+    0 0 0 1px rgba(20, 162, 52, 0.28),
+    0 0 24px rgba(20, 162, 52, 0.62),
+    0 10px 30px rgba(0, 0, 0, 0.44) !important;
+  transform: translate3d(-50%, calc(-50% - 4px), 76px) !important;
+}
+
+
+/* =========================================================
+   REAL VIEW BADGE FIX
+   Uses an actual element inside .project-stage instead of a card pseudo-element.
+   This avoids 3D stacking and CSS-module cascade conflicts.
+   ========================================================= */
+.workPatch :global(.project-card::after) {
+  content: none !important;
+  display: none !important;
+}
+
+.workPatch :global(.project-stage .project-view-badge) {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  z-index: 100 !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 9px 13px 8px;
+  border: 1px solid rgba(241, 240, 233, 0.38) !important;
+  background: rgba(5, 5, 5, 0.88) !important;
+  color: #f1f0e9 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.42);
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.13em !important;
+  white-space: nowrap;
+  opacity: 0.9 !important;
+  pointer-events: none !important;
+  transform: translate(-50%, -50%) !important;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease !important;
+}
+
+.workPatch :global(.project-card:hover .project-view-badge),
+.workPatch :global(.project-card:focus-visible .project-view-badge),
+.workPatch :global(.project-card:focus-within .project-view-badge),
+.workPatch :global(.project-card:active .project-view-badge),
+.workPatch :global(.project-card.is-view-hovered .project-view-badge) {
+  background: #14A234 !important;
+  background-color: #14A234 !important;
+  border-color: #14A234 !important;
+  color: #050505 !important;
+  opacity: 1 !important;
+  box-shadow:
+    0 0 0 1px rgba(20, 162, 52, 0.28),
+    0 0 24px rgba(20, 162, 52, 0.66),
+    0 10px 30px rgba(0, 0, 0, 0.44) !important;
+  transform: translate(-50%, calc(-50% - 4px)) !important;
+}
+
+@media (max-width: 900px) {
+  .workPatch :global(.project-stage .project-view-badge) {
+    min-height: 30px;
+    padding: 8px 10px 7px;
+    font-size: 8px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workPatch :global(.project-stage .project-view-badge) {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   PROOF NUTRITION CASE-STUDY GALLERY
+   Fill every image placeholder and open clicked images fitted to the viewport.
+   ========================================================= */
+
+/* The global stylesheet gives the button image height:auto, which leaves empty
+   space inside tall grid placeholders. Force the clickable image surface to
+   occupy the complete campaign tile. */
+.workPatch :global(.campaign-case-study-item.is-image) {
+  display: grid !important;
+  min-width: 0;
+  min-height: 0;
+}
+
+.workPatch :global(.campaign-case-study-item.is-image .campaign-image-button) {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.workPatch :global(.campaign-case-study-item.is-image .campaign-image-button img) {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+/* Fullscreen image viewer: keep generous margins and fit the complete
+   artwork inside the visible viewport. Never stretch the image to 100% in
+   both directions because that can make browser-specific sizing crop it. */
+.workPatch :global(.project-image-lightbox) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: clamp(56px, 7vh, 92px) clamp(24px, 5vw, 80px) !important;
+  overflow: auto !important;
+}
+
+.workPatch :global(.project-image-lightbox-content) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: calc(100vw - clamp(48px, 10vw, 160px)) !important;
+  max-height: calc(100dvh - clamp(112px, 14vh, 184px)) !important;
+  overflow: visible !important;
+}
+
+.workPatch :global(.project-image-lightbox-content img) {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: min(82vw, 1440px) !important;
+  max-height: 78dvh !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  filter: none !important;
+  margin: auto !important;
+}
+
+@media (max-width: 700px) {
+  .workPatch :global(.campaign-case-study-item.is-image) {
+    min-height: min(118vw, 78svh) !important;
+  }
+
+  .workPatch :global(.project-image-lightbox) {
+    padding: 64px 16px 24px !important;
+  }
+
+  .workPatch :global(.project-image-lightbox-content) {
+    max-width: calc(100vw - 32px) !important;
+    max-height: calc(100dvh - 88px) !important;
+  }
+
+  .workPatch :global(.project-image-lightbox-content img) {
+    max-width: calc(100vw - 32px) !important;
+    max-height: calc(100dvh - 104px) !important;
+  }
+}

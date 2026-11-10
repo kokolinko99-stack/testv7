@@ -1,0 +1,50 @@
+THRTYSIX — CLOUDFLARE STREAM SETUP
+
+WHAT THIS PATCH DOES
+- Replaces Google Drive players in project modals with Cloudflare Stream.
+- Generates a short-lived signed playback token on the server.
+- Does not expose the Cloudflare API token or video UID in the browser code.
+- Keeps the existing Google Drive player only as a fallback until a Stream UID is configured.
+- Does not change the work grid, project cards, thumbnails or 3D hover effects.
+
+1. UPLOAD THE VIDEOS
+In the Cloudflare dashboard, open Stream and upload each portfolio video.
+Copy the UID shown for every uploaded video.
+
+2. PROTECT EACH VIDEO
+For every Stream video:
+- Turn on Require signed URLs.
+- Set Allowed Origins to your real domain, for example:
+  thrtysix.com
+  www.thrtysix.com
+- Add localhost:3000 temporarily only when testing locally.
+- Do not enable MP4 downloads.
+
+3. CREATE AN API TOKEN
+Create a Cloudflare API token that can read/use Cloudflare Stream for your account.
+Do not place the token in a public or NEXT_PUBLIC variable.
+
+4. ADD VARIABLES IN VERCEL
+Open Vercel > your project > Settings > Environment Variables and add:
+
+CLOUDFLARE_ACCOUNT_ID
+CLOUDFLARE_STREAM_API_TOKEN
+CLOUDFLARE_STREAM_CUSTOMER_CODE
+CLOUDFLARE_STREAM_GIVEAWAY_ANIMATED_UID
+CLOUDFLARE_STREAM_SKILLSET_UID
+CLOUDFLARE_STREAM_SINNERS_UID
+CLOUDFLARE_STREAM_LAMBORGHINI_UID
+CLOUDFLARE_STREAM_TRAVIS_UID
+CLOUDFLARE_STREAM_PARALLEL_UID
+
+The customer code is shown in the Cloudflare Stream dashboard. Enter only the code,
+not "customer-" and not ".cloudflarestream.com".
+
+5. REDEPLOY
+After adding the variables, redeploy the website. Configured projects will use the
+Cloudflare player automatically. Projects without a UID continue using the old player.
+
+IMPORTANT
+A browser-playable video can still be screen-recorded. Signed playback, domain restrictions
+and disabled MP4 downloads prevent casual downloading and reuse, but cannot make copying
+physically impossible.
